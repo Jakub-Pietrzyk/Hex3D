@@ -1,8 +1,17 @@
 <div id="level_editor_left_panel" class="left-panel">
   <h2 class="left-title">HEX level editor</h2>
   <select id="hex_count"></select>
+  <div class="hr"></div>
   <button id="save_level" class="save-button">Zapisz</button>
+  <button id="export_level" class="save-button">Wczytaj</button>
+  <div class="hr"></div>
+  {{#each types}}
+    {{#if first }}
+      <button class="type-button type-active">{{name}}</button>
+    {{else}}
+      <button class="type-button">{{name}}</button>
+    {{/if}}
+  {{/each}}
 </div>
-<div id="level_editor_field" class="editor-field">
-
-</div>
+<div id="json_panel" class="mid-panel"></div>
+<div id="level_editor_field" class="editor-field"></div>
