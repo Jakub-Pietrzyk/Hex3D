@@ -89,6 +89,10 @@ class LevelEditor {
         $(this).toggleClass("type-active");
       })
 
+      $("#play_button").on("click",function(){
+        location.href += "hex";
+      })
+
       $("#save_level").on("click", function(){
         if(levelEditor.json.size != null){
           $.ajax({
