@@ -1,5 +1,5 @@
 class Hex {
-    constructor(id, x ,z, dirOut = 0, dirIn = 180, type="WALLS") {
+    constructor(id, x ,z, dirOut = 0, dirIn= 180, type="WALLS") {
       this.id = id;
       this.x = x;
       this.z = z;
@@ -20,8 +20,13 @@ class Hex {
     rotate(){
       this.dirOut += 60;
       if(this.dirOut == 360) this.dirOut = 0;
-      this.dirIn += 60;
-      if(this.dirIn == 360) this.dirIn = 0;
       this.container.css("transform", "rotate(" +this.dirOut +"deg)");
+      if(levelEditor.json.level.length > this.id) levelEditor.json.level[this.id + 1].updateDirIn(this.dirOut);
+    }
+
+    updateDirIn(dirOut){
+      var dirIn = dirOut + 180;
+      if(dirIn >= 360) dirIn -= 360;
+      this.dirIn = dirIn;
     }
 }

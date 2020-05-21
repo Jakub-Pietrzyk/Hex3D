@@ -1,0 +1,14 @@
+.ranges{
+  position: absolute;
+  left: 10px;
+  top:10px;
+  background-color: grey;
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  opacity: 0.7;
+}
+
+.range {
+  width: 100%;
+}

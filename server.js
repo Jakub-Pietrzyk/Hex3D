@@ -24,7 +24,12 @@ app.listen(PORT, function () {
 
     app.get("/hex", function(req,res){
       console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
-      res.render("hex.hbs", {layout: "hex3D.hbs"});
+      res.render("hex.hbs", {layout: "game.hbs"});
+    })
+
+    app.get("/game",function(req,res){
+      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
+      res.render("hex.hbs", {layout: "game.hbs"});
     })
 
     app.post("/saveLevel",function(req,res){

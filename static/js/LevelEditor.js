@@ -53,8 +53,13 @@ class LevelEditor {
       } else {
         var cords = levelEditor.getCordsFromId(field.attr("id"))
         var hex_id = levelEditor.json.level.length;
+        var dirIn = 0;
+        if(levelEditor.json.level.length > 0){
+          var dirIn = levelEditor.json.level[hex_id-1].dirOut + 180;
+          if(dirIn >= 360) dirIn -= 360;
+        }
         var type = $(".type-active").text();
-        var hex = new Hex(hex_id, cords[0], cords[1], 0, 180,type);
+        var hex = new Hex(hex_id, cords[0], cords[1], 0,dirIn ,type);
         field.addClass("active-hex-js");
         field.data("hex_id", hex_id)
       }
@@ -89,8 +94,12 @@ class LevelEditor {
         $(this).toggleClass("type-active");
       })
 
-      $("#play_button").on("click",function(){
+      $("#hex_button").on("click",function(){
         location.href += "hex";
+      })
+
+      $("#play_button").on("click",function(){
+        location.href += "game";
       })
 
       $("#save_level").on("click", function(){

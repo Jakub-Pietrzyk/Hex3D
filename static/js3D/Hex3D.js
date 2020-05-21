@@ -1,5 +1,5 @@
 class Hex3D {
-    constructor(doors1, doors2){
+    constructor(doors1, doors2, type){
        var container = new THREE.Object3D();
        var wall = new THREE.Mesh(Settings.hexWallGeometry, Settings.hexWallMaterial);
 
@@ -21,10 +21,23 @@ class Hex3D {
          }
        }
 
+       var floor = new THREE.Mesh(Settings.hexFloorGeometry, Settings.hexWallMaterial);
+       floor.position.y = Settings.hexFloorYPosition;
+       container.add(floor);
+
        var doors = new Doors3D([doors1, doors2])
        container.add(doors);
 
+       if(type == "LIGHT"){
+         var light = new Light3D(floor);
+         container.add(light);
+       } else if(type =="TREASURE"){
+         var treasure = new Treasure3D();
+         container.add(treasure);
+       }
+
        container.position.y = Settings.hexHeight;
+       container.rotateZ(Math.PI);
        return container
     }
 }
