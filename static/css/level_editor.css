@@ -42,9 +42,14 @@ select{
 }
 
 .save-button{
-  width: 40%;
-  margin: 5% 30%;
-  height: 4%;
+  width: 60%;
+  margin: 5% 20%;
+  height: auto;
+  padding: 2px;
+}
+
+.main-button{
+  font-weight: bold;
 }
 
 .hex{

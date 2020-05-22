@@ -102,6 +102,10 @@ class LevelEditor {
         location.href += "game";
       })
 
+      $("#movement_button").on("click", function(){
+        location.href += "movement";
+      })
+
       $("#save_level").on("click", function(){
         if(levelEditor.json.size != null){
           $.ajax({

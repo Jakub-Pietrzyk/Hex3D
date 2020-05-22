@@ -6,6 +6,11 @@ var camera;
 var level3D;
 var ui;
 var lights = [];
+var player_obj;
+var player;
+var clickedVect = new THREE.Vector3(0,0,0);
+var directionVect = new THREE.Vector3(0,0,0);
+var playerMovement = new PlayerMovement();
 
 $(document).ready(function () {
   scene = new THREE.Scene();
@@ -14,19 +19,19 @@ $(document).ready(function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
   $("#root").append( renderer.domElement );
   camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,10000);
-  camera.position.set(0,300,-1)
 
-  var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-  orbitControl.addEventListener('change', function () {
-    renderer.render(scene, camera)
-  });
+  if(window.location.pathname != "/movement"){
+    camera.position.set(0,300,-1)
+    var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
+    orbitControl.addEventListener('change', function () {
+      renderer.render(scene, camera)
+    });
+  }
 
   var axes = new THREE.AxesHelper(1000)
   scene.add(axes);
 
-  var geometry = new THREE.PlaneGeometry( Settings.planeSize, Settings.planeSize, Settings.planeSegments, Settings.planeSegments );
-  var material = new THREE.MeshBasicMaterial( {color: 0x111111, side: THREE.DoubleSide, wireframe: true} );
-  var plane = new THREE.Mesh( geometry, material );
+  var plane = new THREE.Mesh( Settings.planeGeometry, Settings.planeMaterial );
   plane.rotateX( Math.PI / 2 );
   scene.add( plane );
 
@@ -37,6 +42,11 @@ $(document).ready(function () {
     var cell = new Hex3D(1,4, "LIGHT")
     cell.rotateY(Math.PI/3)
     scene.add(cell)
+  } else if(window.location.pathname == "/movement"){
+    player_obj = new Player();
+    player = player_obj.getPlayer();
+    scene.add(player);
+    playerMovement.init();
   }
 
 
@@ -58,4 +68,12 @@ function render() {
     }
   }
 
+  if(playerMovement.canMove()){
+    player.translateOnAxis(directionVect, 2)
+  }
+
+  camera.position.x = player.position.x
+  camera.position.z = player.position.z + 250
+  camera.position.y = player.position.y + 250
+  camera.lookAt(player.position)
 }

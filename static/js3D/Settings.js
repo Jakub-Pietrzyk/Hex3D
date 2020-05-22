@@ -1,8 +1,8 @@
 var Settings = {
   backgroundColor: 0xEEEEEE,
 
-  planeSize: 1000,
-  planeSegments: 30,
+  planeGeometry: new THREE.PlaneGeometry( 1000, 1000, 30, 30 ),
+  planeMaterial: new THREE.MeshBasicMaterial( {color: 0x111111, side: THREE.DoubleSide, wireframe: true} ),
 
   hexWallGeometry: new THREE.BoxGeometry( 60, 30, 10 ),
   hexWallMaterial: new THREE.MeshPhongMaterial( {color: 0x0000ff} ),
@@ -23,5 +23,11 @@ var Settings = {
   lightMaterial: new THREE.MeshBasicMaterial({color: 0x00ff00,side: THREE.DoubleSide,wireframe: true,transparent: true, opacity: 0.5}),
 
   treasureGeometry: new THREE.BoxGeometry( 10, 10, 10 ),
-  treasureMaterial: new THREE.MeshPhongMaterial( {color: 0xd4af37} )
+  treasureMaterial: new THREE.MeshPhongMaterial( {color: 0xd4af37} ),
+
+  playerGeometry: new THREE.BoxGeometry(15,15,15),
+  playerMaterial: new THREE.MeshPhongMaterial({color: 0x000000, side: THREE.DoubleSide, wireframe: true}),
+
+  pointGeometry: new THREE.SphereGeometry(5, 10, 2),
+  pointMaterial: new THREE.MeshBasicMaterial({color: 0xff0000,side: THREE.DoubleSide,wireframe: true,transparent: true, opacity: 0.5})
 }
