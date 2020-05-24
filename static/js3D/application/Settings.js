@@ -27,6 +27,8 @@ var Settings = {
 
   playerGeometry: new THREE.BoxGeometry(15,15,15),
   playerMaterial: new THREE.MeshPhongMaterial({color: 0x000000, side: THREE.DoubleSide, wireframe: true}),
+  playerYPosition: 5,
+  playerScale: 0.6,
 
   pointGeometry: new THREE.SphereGeometry(5, 10, 2),
   pointMaterial: new THREE.MeshBasicMaterial({color: 0xff0000,side: THREE.DoubleSide,wireframe: true,transparent: true, opacity: 0.5})

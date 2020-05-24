@@ -3,6 +3,7 @@ class PlayerMovement {
     this.raycaster = new THREE.Raycaster();
     this.mouseVector = new THREE.Vector2();
     this.clicked_point = null;
+    this.can_stop = true;
   }
 
   init(){
@@ -15,17 +16,24 @@ class PlayerMovement {
 
         if (intersects.length > 0) {
          clickedVect = intersects[0].point;
+         clickedVect.y = Settings.playerYPosition;
          directionVect = clickedVect.clone().sub(player.position).normalize();
          var playerRotate = Math.atan2(
              player.position.clone().x - clickedVect.x,
              player.position.clone().z - clickedVect.z
           )
-          player_obj.getModel().rotation.y = playerRotate - Math.PI
+          player_obj.model.container.rotation.y = playerRotate - Math.PI/2
 
          if(playerMovement.clicked_point == null){
            playerMovement.createClickedPoint();
          }
          playerMovement.moveClickedPoint();
+
+         if(player_obj.model.mixer && playerMovement.canMove()){
+           player_obj.model.mixer.stopAllAction();
+           player_obj.model.setAnimation("run");
+           playerMovement.can_stop = true;
+         }
       }
     })
   }

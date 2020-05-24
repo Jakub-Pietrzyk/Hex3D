@@ -30,9 +30,15 @@ class Level3D {
        var x = Settings.hexStartingPoint + hexes[i]["x"] * Settings.hexXMultiplier;
        var z = Settings.hexStartingPoint + hexes[i]["z"] * Settings.hexZMultiplier;
        if(hexes[i]["z"]%2==1) x = Settings.hexStartingPoint + hexes[i]["x"] * Settings.hexXMultiplier + Settings.hexXAddition;
-       cell.position.x = -z;
-       cell.position.z = -x
-       scene.add(cell)
+       cell.position.set(-z,0,-x);
+       scene.add(cell);
+       if(i==0){
+         player_obj = new Player();
+         player = player_obj.getPlayer();
+         player.position.set(cell.position.x,Settings.playerYPosition,cell.position.z)
+         scene.add(player);
+         playerMovement.init();
+       }
      }
    }
 }
