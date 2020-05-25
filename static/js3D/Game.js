@@ -13,6 +13,8 @@ var directionVect = new THREE.Vector3(0,0,0);
 var playerMovement = new PlayerMovement();
 var clock = new THREE.Clock();
 var delta;
+var allies = [];
+var clicked_allies = [];
 
 $(document).ready(function () {
   scene = new THREE.Scene();
@@ -44,11 +46,26 @@ $(document).ready(function () {
     var cell = new Hex3D(1,4, "LIGHT")
     cell.rotateY(Math.PI/3)
     scene.add(cell)
-  } else if(window.location.pathname == "/movement"){
+  } else if(["/movement", "/ally", "/allies"].includes(window.location.pathname)){
     player_obj = new Player();
     player = player_obj.getPlayer();
     scene.add(player);
     playerMovement.init();
+    if(window.location.pathname == "/ally"){
+      var ally = new Ally();
+      scene.add(ally);
+      ally.position.set(Math.random()*(100 + 100) - 100,Settings.playerYPosition,Math.random()*(100 + 100) - 100)
+      ally.name = "ally_" + allies.length
+      allies.push(ally);
+    } else if(window.location.pathname == "/allies"){
+      for(var i=0;i<5;i++){
+        var ally = new Ally();
+        scene.add(ally);
+        ally.position.set(Math.random()*(100 + 100) - 100,Settings.playerYPosition,Math.random()*(100 + 100) - 100)
+        ally.name = "ally_" + allies.length
+        allies.push(ally);
+      }
+    }
   }
 
 
@@ -75,12 +92,20 @@ function render() {
   }
 
   if(playerMovement.canMove()){
-    player.translateOnAxis(directionVect, 2)
+    player.translateOnAxis(directionVect, Settings.playerSpeed)
+  }
+
+  for(var i=0;i<clicked_allies.length;i++){
+    if(clicked_allies[i].canMove()){
+      clicked_allies[i].translateOnAxis(clicked_allies[i].directionVect,Settings.allySpeed);
+      clicked_allies[i].startGoingAfterPlayer();
+    }
   }
 
   if(player_obj && player_obj.model.mixer &&!playerMovement.canMove() && playerMovement.can_stop) {
     player_obj.model.mixer.stopAllAction();
     player_obj.model.setAnimation("attack");
+    player_obj.model.setAnimation("stand");
     playerMovement.can_stop = false
   }
 

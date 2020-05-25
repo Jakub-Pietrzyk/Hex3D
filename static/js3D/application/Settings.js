@@ -29,7 +29,14 @@ var Settings = {
   playerMaterial: new THREE.MeshPhongMaterial({color: 0x000000, side: THREE.DoubleSide, wireframe: true}),
   playerYPosition: 5,
   playerScale: 0.6,
+  playerWalkingPrecision: 1,
+  playerSpeed: 2,
 
   pointGeometry: new THREE.SphereGeometry(5, 10, 2),
-  pointMaterial: new THREE.MeshBasicMaterial({color: 0xff0000,side: THREE.DoubleSide,wireframe: true,transparent: true, opacity: 0.5})
+  pointMaterial: new THREE.MeshBasicMaterial({color: 0xff0000,side: THREE.DoubleSide,wireframe: true,transparent: true, opacity: 0.5}),
+
+  allyGeometry: new THREE.SphereGeometry(10, 20, 20),
+  allyMaterial: new THREE.MeshBasicMaterial({color: 0x00ff00, side: THREE.DoubleSide, wireframe: true}),
+  allyDistanceToPlayer: 20,
+  allySpeed: 1.7
 }

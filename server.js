@@ -37,6 +37,16 @@ app.listen(PORT, function () {
       res.render("hex.hbs", {layout: "game.hbs"});
     })
 
+    app.get("/ally",function(req,res){
+      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
+      res.render("hex.hbs", {layout: "game.hbs"});
+    })
+
+    app.get("/allies",function(req,res){
+      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
+      res.render("hex.hbs", {layout: "game.hbs"});
+    })
+
     app.post("/saveLevel",function(req,res){
       console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
       levels.push(JSON.parse(req.body.level));

@@ -13,27 +13,36 @@ class PlayerMovement {
         playerMovement.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
         playerMovement.raycaster.setFromCamera(playerMovement.mouseVector, camera);
 
-        var intersects = playerMovement.raycaster.intersectObjects(scene.children);
+        var intersects = playerMovement.raycaster.intersectObjects(scene.children, true);
 
         if (intersects.length > 0) {
-         clickedVect = intersects[0].point;
-         clickedVect.y = Settings.playerYPosition;
-         directionVect = clickedVect.clone().sub(player.position).normalize();
-         var playerRotate = Math.atan2(
-             player.position.clone().x - clickedVect.x,
-             player.position.clone().z - clickedVect.z
-          )
-          player_obj.model.container.rotation.y = playerRotate - Math.PI/2
+         if (allies && allies.includes(intersects[0].object.parent)) {
+           intersects[0].object.parent.startGoingAfterPlayer();
+           if(!clicked_allies.includes(intersects[0].object.parent)) {
+             clicked_allies.push(intersects[0].object.parent);
+             intersects[0].object.parent.minDistance = Settings.allyDistanceToPlayer * clicked_allies.length
+           }
+         } else {
+           clickedVect = intersects[0].point;
+           clickedVect.y = Settings.playerYPosition;
+           directionVect = clickedVect.clone().sub(player.position).normalize();
+           var playerRotate = Math.atan2(
+               player.position.clone().x - clickedVect.x,
+               player.position.clone().z - clickedVect.z
+            )
+            player_obj.model.container.rotation.y = playerRotate - Math.PI/2
 
-         if(playerMovement.clicked_point == null){
-           playerMovement.createClickedPoint();
-         }
-         playerMovement.moveClickedPoint();
+           if(playerMovement.clicked_point == null){
+             playerMovement.createClickedPoint();
+           }
+           playerMovement.moveClickedPoint();
 
-         if(player_obj.model.mixer && playerMovement.canMove()){
-           player_obj.model.mixer.stopAllAction();
-           player_obj.model.setAnimation("run");
-           playerMovement.can_stop = true;
+           if(player_obj.model.mixer && playerMovement.canMove() && !playerMovement.can_stop){
+             player_obj.model.mixer.stopAllAction();
+             player_obj.model.setAnimation("run");
+             player_obj.model.setAnimation("stand");
+             playerMovement.can_stop = true;
+           }
          }
       }
       })
@@ -55,7 +64,7 @@ class PlayerMovement {
 
   canMove(){
     if(this.clicked_point){
-      return Math.round(player.position.x) != Math.round(playerMovement.clicked_point.position.x)  && Math.round(player.position.z) != Math.round(playerMovement.clicked_point.position.z)
+      return player.position.distanceTo(playerMovement.clicked_point.position) > Settings.playerWalkingPrecision
     } else {
       return false;
     }

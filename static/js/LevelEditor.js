@@ -106,6 +106,14 @@ class LevelEditor {
         location.href += "movement";
       })
 
+      $("#ally_button").on("click",function(){
+        location.href += "ally";
+      })
+
+      $("#allies_button").on("click",function(){
+        location.href += "allies";
+      })
+
       $("#save_level").on("click", function(){
         if(levelEditor.json.size != null){
           $.ajax({
