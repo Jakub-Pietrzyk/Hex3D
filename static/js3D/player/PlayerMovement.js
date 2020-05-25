@@ -8,6 +8,7 @@ class PlayerMovement {
 
   init(){
     $(document).mousedown(function (event) {
+      $(document).mousemove(function(event){
         playerMovement.mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
         playerMovement.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
         playerMovement.raycaster.setFromCamera(playerMovement.mouseVector, camera);
@@ -35,6 +36,11 @@ class PlayerMovement {
            playerMovement.can_stop = true;
          }
       }
+      })
+    })
+
+    $(document).mouseup(function(event){
+      $(document).off('mousemove');
     })
   }
 
