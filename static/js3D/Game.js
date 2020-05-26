@@ -46,16 +46,15 @@ $(document).ready(function () {
     var cell = new Hex3D(1,4, "LIGHT")
     cell.rotateY(Math.PI/3)
     scene.add(cell)
-  } else if(["/movement", "/ally", "/allies"].includes(window.location.pathname)){
+  } else if(["/movement", "/ally", "/allies", "/ally_model"].includes(window.location.pathname)){
     player_obj = new Player();
     player = player_obj.getPlayer();
     scene.add(player);
     playerMovement.init();
-    if(window.location.pathname == "/ally"){
-      var ally = new Ally();
+    if(window.location.pathname == "/ally" || window.location.pathname == "/ally_model"){
+      var ally = new Ally(window.location.pathname == "/ally_model");
       scene.add(ally);
       ally.position.set(Math.random()*(100 + 100) - 100,Settings.playerYPosition,Math.random()*(100 + 100) - 100)
-      ally.name = "ally_" + allies.length
       allies.push(ally);
     } else if(window.location.pathname == "/allies"){
       for(var i=0;i<5;i++){
@@ -75,7 +74,7 @@ $(document).ready(function () {
 function render() {
   if(player_obj){
     delta = clock.getDelta();
-    player_obj.model.updateModel();
+    player_obj.model.updateModel(delta);
   }
 
   requestAnimationFrame(render);
@@ -99,6 +98,23 @@ function render() {
     if(clicked_allies[i].canMove()){
       clicked_allies[i].translateOnAxis(clicked_allies[i].directionVect,Settings.allySpeed);
       clicked_allies[i].startGoingAfterPlayer();
+    }
+
+    if(clicked_allies[i].with_model && clicked_allies[i].model.mixer && !clicked_allies[i].canMove() && clicked_allies[i].can_stop) {
+      clicked_allies[i].model.mixer.stopAllAction();
+      clicked_allies[i].model.setAnimation("stand");
+      clicked_allies[i].can_stop = false
+    }
+  }
+
+  for(var i=0;i<allies.length;i++){
+    if(allies[i].with_model){
+      var ally_delta = allies[i].clock.getDelta();
+      allies[i].model.updateModel(ally_delta);
+
+      if(allies[i].model.mixer && allies[i].started){
+        allies[i].model.setAnimation("stand");
+      }
     }
   }
 

@@ -13,6 +13,7 @@ class Hex {
     display(){
       this.container = $("<div class='arrow'>^<br />" + this.id + "</div>");
       this.container.css("transform", "rotate(" +this.dirOut +"deg)");
+      this.container.attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
       var hex_div = $("#id_" + this.x + "_" + this.z);
       hex_div.append(this.container);
     }

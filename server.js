@@ -22,27 +22,7 @@ app.listen(PORT, function () {
       res.render("index.hbs", {types: HEX_TYPES});
     })
 
-    app.get("/hex", function(req,res){
-      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
-      res.render("hex.hbs", {layout: "game.hbs"});
-    })
-
-    app.get("/game",function(req,res){
-      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
-      res.render("hex.hbs", {layout: "game.hbs"});
-    })
-
-    app.get("/movement",function(req,res){
-      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
-      res.render("hex.hbs", {layout: "game.hbs"});
-    })
-
-    app.get("/ally",function(req,res){
-      console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
-      res.render("hex.hbs", {layout: "game.hbs"});
-    })
-
-    app.get("/allies",function(req,res){
+    app.get(["/hex", "/game", "/movement", "/ally", "/allies", "/ally_model"], function(req,res){
       console.log("Zapytanie " + req.method + " na adres: " + req.url + " - params: " + JSON.stringify(req.query));
       res.render("hex.hbs", {layout: "game.hbs"});
     })

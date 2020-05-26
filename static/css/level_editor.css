@@ -46,10 +46,13 @@ select{
   margin: 5% 20%;
   height: auto;
   padding: 2px;
+  cursor: pointer;
 }
 
 .main-button{
   font-weight: bold;
+  width: 100%;
+  cursor: pointer;
 }
 
 .hex{

@@ -94,26 +94,6 @@ class LevelEditor {
         $(this).toggleClass("type-active");
       })
 
-      $("#hex_button").on("click",function(){
-        location.href += "hex";
-      })
-
-      $("#play_button").on("click",function(){
-        location.href += "game";
-      })
-
-      $("#movement_button").on("click", function(){
-        location.href += "movement";
-      })
-
-      $("#ally_button").on("click",function(){
-        location.href += "ally";
-      })
-
-      $("#allies_button").on("click",function(){
-        location.href += "allies";
-      })
-
       $("#save_level").on("click", function(){
         if(levelEditor.json.size != null){
           $.ajax({

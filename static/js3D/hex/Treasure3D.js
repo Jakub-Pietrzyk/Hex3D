@@ -4,6 +4,7 @@ class Treasure3D {
 
       var cube = new THREE.Mesh(Settings.treasureGeometry, Settings.treasureMaterial);
       container.add(cube);
+      container.name = "treasure"
 
       return container
     }

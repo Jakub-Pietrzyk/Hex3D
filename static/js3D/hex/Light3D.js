@@ -16,6 +16,7 @@ class Light3D {
       }
 
       lights.push({height: container, intensity: spotlight});
+      container.name = "light"
       return container
     }
 }

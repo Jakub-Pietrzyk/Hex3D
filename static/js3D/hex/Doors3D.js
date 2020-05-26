@@ -25,9 +25,11 @@ class Doors3D {
         side.position.x = x;
         side.position.z = z;
         side.lookAt(container.position)
-        side.name = "wall_" + (cords[i]*60)
+        side.name = "door_" + (cords[i]*60)
         container.add(side);
       }
+
+      container.name = "doors"
       return container
     }
 }

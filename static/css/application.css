@@ -12,3 +12,14 @@ body{
   height: 1px;
   background-color: black;
 }
+
+.btn-link{
+  display: block;
+  text-align: center;
+  width: 60%;
+  margin: 5% 20%;
+  height: auto;
+  padding: 2px;
+  color: black;
+  text-decoration: none;
+}

@@ -7,8 +7,8 @@ class PlayerMovement {
   }
 
   init(){
-    $(document).mousedown(function (event) {
-      $(document).mousemove(function(event){
+    $("#root").mousedown(function (event) {
+      $("#root").mousemove(function(event){
         playerMovement.mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
         playerMovement.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
         playerMovement.raycaster.setFromCamera(playerMovement.mouseVector, camera);
@@ -16,11 +16,18 @@ class PlayerMovement {
         var intersects = playerMovement.raycaster.intersectObjects(scene.children, true);
 
         if (intersects.length > 0) {
-         if (allies && allies.includes(intersects[0].object.parent)) {
-           intersects[0].object.parent.startGoingAfterPlayer();
-           if(!clicked_allies.includes(intersects[0].object.parent)) {
-             clicked_allies.push(intersects[0].object.parent);
-             intersects[0].object.parent.minDistance = Settings.allyDistanceToPlayer * clicked_allies.length
+         if (allies && (allies.includes(intersects[0].object.parent) || allies.includes(intersects[0].object.parent.parent))) {
+           var obj;
+           if(allies.includes(intersects[0].object.parent)){
+             obj = intersects[0].object.parent
+           } else if(allies.includes(intersects[0].object.parent.parent)){
+             obj = intersects[0].object.parent.parent
+           }
+           obj.started = false
+           obj.startGoingAfterPlayer();
+           if(!clicked_allies.includes(obj)) {
+             clicked_allies.push(obj);
+             obj.minDistance = Settings.allyDistanceToPlayer * clicked_allies.length
            }
          } else {
            clickedVect = intersects[0].point;
@@ -49,7 +56,7 @@ class PlayerMovement {
     })
 
     $(document).mouseup(function(event){
-      $(document).off('mousemove');
+      $("#root").off('mousemove');
     })
   }
 
